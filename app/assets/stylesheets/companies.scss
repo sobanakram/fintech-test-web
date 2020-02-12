@@ -1,0 +1,28 @@
+// Place all the styles related to the Companies controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: https://sass-lang.com/
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.pink {
+  color: #ff1493;
+}
+
+.logo {
+  background: #e6e6fc;
+  display: flex;
+  align-items: center;
+  width: auto;
+  justify-content: center;
+  width: 100px;
+  height: 100px;
+  border-radius: 15px;
+}
+
+.card-title {
+  color: #65638f;
+}
