@@ -40,16 +40,10 @@ class CompaniesController < ApplicationController
   # PATCH/PUT /companies/1
   # PATCH/PUT /companies/1.json
   def update
-    respond_to do |format|
-      if @company.update(company_params)
-        format.html { redirect_to @company, notice: 'Company was successfully updated.' }
-        format.json { render :show, status: :ok, location: @company, notice: 'Json' }
-        format.js {}
-      else
-        format.html { render :edit }
-        format.json { render json: @company.errors, status: :unprocessable_entity }
-        format.js
-      end
+    if @company.update(company_params)
+      render json: @company, status: :ok, location: @company, notice: 'Json'
+    else
+      render json: @company.errors, status: :unprocessable_entity
     end
   end
 

@@ -1,5 +1,5 @@
 <% company_name = @company.name %>
-<div class="px-5 mx-auto" data-controller="companies" id="id"  data-id=<%= @company.id %>>
+<div class="px-5 mx-auto" data-controller="companies" data-id=<%= @company.id %>>
   <div class="header">
     <h5 class="bold" data-target="companies.output"><%= company_name %></h5>
     <p><span class="pink">Unreviewed</span> | Created  <%= format_date(@company.created_at) %> |
@@ -20,7 +20,10 @@
 <script>
     $(document).on('keydown', function (event) {
         if (event.key == "Escape") {
-            var company_name = $('#company-name-input').attr('data-name')
+
+
+
+            let company_name = $('#company-name-input').attr('data-name')
             $('#company-name-input').val(company_name).focus().blur();
         }
     });
