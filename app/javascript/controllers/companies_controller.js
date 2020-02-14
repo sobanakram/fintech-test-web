@@ -10,38 +10,42 @@ export default class extends Controller {
     let key = event.target.dataset.target.split(".")[1];
     let dataId = this.data.element.dataset.id;
     let companyData = {};
-    companyData[key] = this[key + "Target"].value
-    // this.constructor.targets.forEach((key)=>{
-    //     if(this[key+"Target"].dataset.isInput === "true")
-    //         companyData[key] = this[key+"Target"].value
-    // });
-    console.log(companyData);
     let ref = this;
-    this.UpdateRecord(dataId, companyData)
+    companyData[key] = this[key + "Target"].value;
+    this.saveRecord(dataId, companyData)
+      .then(response => {
+        if (response.status == 422)
+          throw response;
+        else
+          return response.json()
+      })
       .then(function (response) {
-        if (response.status === 200) {
+        if (response) {
+          if (!ref.data.element.dataset.id)
+            $(ref.element).attr('data-id', response.id);
           ref[key + "OutputTargets"].forEach((target) => {
             target.textContent = ref[key + "Target"].value;
             $(event.target).attr('data-name', ref[key + "Target"].value).focus().blur();
           });
         }
+      }).catch((error) => {
+      error.json().then(errorMessages => {
+        errorMessages.forEach((message) => {
+          $.notify(message, "error");
+        })
       })
-      .catch((error) => {
-        console.error('Error:', error);
-      });
+    });
   }
 
-  UpdateRecord(dataId, companyData) {
-    let response = fetch("/companies/" + dataId, {
-      method: 'PUT',
+  saveRecord = (dataId, companyData) => fetch(dataId ? "/companies/" + dataId + ".json" : "/companies.json",
+    {
+      method: dataId ? 'PUT' : 'POST',
       credentials: 'include',
-      dataType: 'JSON',
       headers: new Headers({
         'Content-Type': 'application/json',
         "X-CSRF-Token": getMetaValue("csrf-token")
       }),
       body: JSON.stringify(companyData),
     });
-    return response;
-  }
+
 }

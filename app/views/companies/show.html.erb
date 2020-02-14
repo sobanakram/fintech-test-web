@@ -16,10 +16,10 @@
     <div class="w-100"></div>
   </div>
 </div>
-
+<%= link_to 'Back', companies_path %>
 <script>
-  $(document).on('keydown', function (event) {
-    if (event.key == "Escape") {
+  $('[data-controller]').on('keydown', function (event) {
+    if (event.key === "Escape") {
       let company_name = $('#company-name-input').attr('data-name')
       $('#company-name-input').val(company_name).focus().blur();
     }
