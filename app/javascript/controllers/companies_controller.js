@@ -3,7 +3,7 @@ import { getMetaValue } from "@rails/activestorage/src/helpers";
 
 export default class extends Controller {
   //Convention to follow for output tags. Name of input field+ "Output"
-  static targets = ["nameOutput", "name"]
+  static targets = ["nameOutput", "name"];
 
   onChange(event) {
 
@@ -14,7 +14,7 @@ export default class extends Controller {
     companyData[key] = this[key + "Target"].value;
     this.saveRecord(dataId, companyData)
       .then(response => {
-        if (response.status == 422)
+        if (response.status === 422)
           throw response;
         else
           return response.json()
@@ -25,7 +25,7 @@ export default class extends Controller {
             $(ref.element).attr('data-id', response.id);
           ref[key + "OutputTargets"].forEach((target) => {
             target.textContent = ref[key + "Target"].value;
-            $(event.target).attr('data-name', ref[key + "Target"].value).focus().blur();
+            $(event.target).attr('data-original-value', ref[key + "Target"].value).focus().blur();
           });
         }
       }).catch((error) => {
@@ -47,5 +47,4 @@ export default class extends Controller {
       }),
       body: JSON.stringify(companyData),
     });
-
 }

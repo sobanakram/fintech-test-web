@@ -11,17 +11,19 @@
     </div>
     <div class="card-block px-2">
       <h6 class="card-text">COMPANY</h6>
-      <input id="company-name-input" type="text" value="<%= company_name %>" class="border-0 card-title h1 pt-2" data-name="<%= company_name %>" data-action="companies#onChange" data-target="companies.name">
+      <input id="company-name-input" type="text" value="<%= company_name %>" class="border-0 card-title h1 pt-2" data-original-value="<%= company_name %>" data-action="companies#onChange" data-target="companies.name">
     </div>
     <div class="w-100"></div>
   </div>
 </div>
 <%= link_to 'Back', companies_path %>
 <script>
-  $('[data-controller]').on('keydown', function (event) {
+  $('[data-controller]').on('keydown', (event) => {
     if (event.key === "Escape") {
-      let company_name = $('#company-name-input').attr('data-name')
-      $('#company-name-input').val(company_name).focus().blur();
+      $("input[id^='company-']").each((_index, element) => {
+        element.value = element.dataset.originalValue;
+        element.blur();
+      });
     }
   });
 </script>
