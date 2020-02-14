@@ -1,9 +1,9 @@
 <% company_name = @company.name %>
 <div class="px-5 mx-auto" data-controller="companies" data-id=<%= @company.id %>>
   <div class="header">
-    <h5 class="bold" data-target="companies.output"><%= company_name %></h5>
+    <h5 class="bold" data-target="companies.nameOutput"><%= company_name %></h5>
     <p><span class="pink">Unreviewed</span> | Created  <%= format_date(@company.created_at) %> |
-      <span data-target="companies.output"><%= company_name %></span> was updated by Brainx</p>
+      <span data-target="companies.nameOutput"><%= company_name %></span> was updated by Brainx</p>
   </div>
   <div class="card flex-row flex-wrap border-0 pt-3">
     <div class="logo">
@@ -11,20 +11,17 @@
     </div>
     <div class="card-block px-2">
       <h6 class="card-text">COMPANY</h6>
-      <input id="company-name-input" type="text" value="<%= company_name %>"  class="border-0 card-title h1 pt-2" data-name="<%= company_name %>" data-action="companies#addName"  data-target="companies.name">
+      <input id="company-name-input" type="text" value="<%= company_name %>" class="border-0 card-title h1 pt-2" data-name="<%= company_name %>" data-action="companies#onChange" data-target="companies.name">
     </div>
     <div class="w-100"></div>
   </div>
 </div>
 
 <script>
-    $(document).on('keydown', function (event) {
-        if (event.key == "Escape") {
-
-
-
-            let company_name = $('#company-name-input').attr('data-name')
-            $('#company-name-input').val(company_name).focus().blur();
-        }
-    });
+  $(document).on('keydown', function (event) {
+    if (event.key == "Escape") {
+      let company_name = $('#company-name-input').attr('data-name')
+      $('#company-name-input').val(company_name).focus().blur();
+    }
+  });
 </script>
